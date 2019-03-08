@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { deleteSmurf, prepopulateUpdateForm } from '../actions';
 
