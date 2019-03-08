@@ -11,6 +11,12 @@ import {
   DELETE_SUCCESS,
   DELETE_FAILURE,
 
+  UPDATE_START,
+  UPDATE_SUCCESS,
+  UPDATE_FAILURE,
+
+  PREPOPULATE_UPDATE_FORM,
+
 } from '../actions'
 
  const initialState = {
@@ -83,7 +89,34 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         deletingSmurf: false,
         error: action.payload
-      }    
+      }
+
+    case UPDATE_START:
+      return {
+        ...state,
+        updatingSmurf: true,
+        error: null
+      }
+    case UPDATE_SUCCESS:
+      return {
+        ...state,
+        updatingSmurf: false,
+        smurfs: action.payload,
+        error: null
+      }
+    case UPDATE_FAILURE:
+      return {
+        ...state,
+        updatingSmurf: false,
+        error: action.payload
+      }  
+    
+    case PREPOPULATE_UPDATE_FORM:
+      return {
+        ...state,
+        activeSmurf: action.payload,
+        error: null
+      }  
       
     default:
       return state;

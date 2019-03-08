@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { deleteSmurf } from '../actions';
+import { deleteSmurf, prepopulateUpdateForm } from '../actions';
 
 const SmurfCard = props => {
     const { smurf } = props
@@ -11,13 +11,18 @@ const SmurfCard = props => {
         props.deleteSmurf(id)
     }
 
+    const handlePrepopulate = (e, smurf) => {
+        e.preventDefault();
+        props.prepopulateUpdateForm(smurf)
+      }
+
     return (
         <div>
             <p>{`Name: ${smurf.name}`}</p>
             <p>{`Age: ${smurf.age}`}</p>
             <p>{`Email: ${smurf.height}`}</p>
             <button 
-            // onClick={e => handlePrepopulate(e, friend)}
+            onClick={e => handlePrepopulate(e, smurf)}
             className="update"
             >Update</button>
             <button
@@ -30,5 +35,5 @@ const SmurfCard = props => {
 
 export default connect(
     null,
-    { deleteSmurf }
+    { deleteSmurf, prepopulateUpdateForm }
 )(SmurfCard);

@@ -12,6 +12,12 @@ export const DELETE_START = 'DELETE_START';
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAILURE = 'DELETE_FAILURE';
 
+export const UPDATE_START = 'UPDATE_START';
+export const UPDATE_SUCCESS = 'UPDATE_SUCCESS';
+export const UPDATE_FAILURE = 'UPDATE_FAILURE';
+
+export const PREPOPULATE_UPDATE_FORM = 'PREPOPULATE_UPDATE_FORM';
+
 export const getData = () => dispatch => {
   dispatch({ type: FETCH_START })
 
@@ -52,4 +58,25 @@ export const deleteSmurf = id => dispatch => {
       console.log(err)
       dispatch({ type: DELETE_FAILURE, payload: err});
     })
+}
+
+export const updateSmurf = smurf => dispatch => {
+  dispatch({ type: UPDATE_START })
+
+  axios.put(`http://localhost:3333/smurfs/${smurf.id}`, smurf)
+    .then(res => {
+      console.log(res)
+      dispatch({ type: UPDATE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err)
+      dispatch({ type: UPDATE_FAILURE, payload: err});
+    })
+}
+
+export const prepopulateUpdateForm = smurf => {
+  return {
+      type: PREPOPULATE_UPDATE_FORM,
+      payload: smurf
+  }
 }

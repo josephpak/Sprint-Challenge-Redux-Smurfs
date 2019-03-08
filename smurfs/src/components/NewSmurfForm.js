@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addSmurf } from '../actions';
+import { addSmurf, updateSmurf } from '../actions';
 
 class NewSmurfForm extends React.Component {
     state = {
@@ -9,6 +9,17 @@ class NewSmurfForm extends React.Component {
             age: '',
             height: ''
         } 
+    }
+
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.activeSmurf &&
+            prevProps.activeSmurf !== this.props.activeSmurf
+        ) {
+            this.setState({
+            smurf: this.props.activeSmurf
+            });
+        }
     }
 
     handleFormChange = e => {
@@ -34,17 +45,17 @@ class NewSmurfForm extends React.Component {
             height: ''
         }
 
-        // if (this.props.activeSmurf) {
-        //     // this.props.updateFriend(e, this.state.friend)
-        //     this.setState({
-        //         smurf: initialState
-        //     })   
-        // } else {
+        if (this.props.activeSmurf) {
+            this.props.updateSmurf(this.state.smurf)
+            this.setState({
+                smurf: initialState
+            })   
+        } else {
             this.props.addSmurf(this.state.smurf)
             this.setState({
                 smurf: initialState
             })   
-        // }
+        }
     }
     
     render() {
@@ -87,7 +98,13 @@ class NewSmurfForm extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        activeSmurf: state.activeSmurf
+    }
+}
+
 export default connect(
-    null,
-    { addSmurf }
+    mapStateToProps,
+    { addSmurf, updateSmurf }
 )(NewSmurfForm)
