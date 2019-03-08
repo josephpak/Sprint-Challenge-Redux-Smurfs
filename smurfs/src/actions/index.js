@@ -39,3 +39,17 @@ export const addSmurf = smurf => dispatch => {
       dispatch({ type: ADD_FAILURE, payload: err});
     })
 }
+
+export const deleteSmurf = id => dispatch => {
+  dispatch({ type: DELETE_START })
+
+  axios.delete(`http://localhost:3333/smurfs/${id}`)
+    .then(res => {
+      console.log(res)
+      dispatch({ type: DELETE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err)
+      dispatch({ type: DELETE_FAILURE, payload: err});
+    })
+}
