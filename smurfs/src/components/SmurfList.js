@@ -5,7 +5,7 @@ export default function SmurfList(props) {
   return (
     <div>
       {props.smurfs.map(smurf => (
-          <SmurfCard smurf={smurf}/>
+          <SmurfCard key={smurf.id} smurf={smurf}/>
       ))}
     </div>
   )
